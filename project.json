@@ -1,0 +1,24 @@
+{
+  "project_type": "javascript",
+  "debugMode" : 1,
+  "showFPS" : false,
+  "frameRate" : 60,
+  "id" : "WebGL-output",
+  "renderMode" : 0,
+  "engineDir":"kkframe",
+  "modules" : ["common", "extras"],
+
+  "jsList" : [
+    "libs/stats.js",
+    "libs/dat.gui.js",
+    "libs/OrbitControls.js",
+    "libs/ColladaLoader.js",
+    "libs/tween.min.js",
+    "libs/MTLLoader.js",
+    "libs/OBJLoader.js",
+    "libs/OBJMTLLoader.js",
+
+    "src/cubeManager.js",
+    "src/playScene.js"
+  ]
+}
