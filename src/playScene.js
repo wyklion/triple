@@ -6,11 +6,19 @@ var ROW_NUM = 8;
 var COL_NUM = 28;
 var CUBE_LENGTH = 2;
 
-var PlayScene = function(){
-};
-
-PlayScene.prototype = {
-    constructor: PlayScene,
+var PlayScene = kk.Class.extend({
+    ctor:function(){
+        var scope = this;
+        this.init();
+        var listener1 = kk.EventListener.create({
+            event: kk.EventListener.TOUCH,
+            swallowTouches: true,
+            onTap: function (e) {
+                scope.onTap({x:e.center.x, y:e.center.y});
+            }
+        });
+        kk.eventManager.addListener(listener1);
+    },
     init:function(){
         this.clock = new THREE.Clock();
         // create a scene, that will hold all our elements such as objects, cameras and lights.
@@ -35,12 +43,25 @@ PlayScene.prototype = {
         camera.position.z = 40;
         //camera.lookAt(new THREE.Vector3(0, 25, 0));
 
-        this.orbitControls = new THREE.OrbitControls(camera);
-        this.orbitControls.center.y = 10;
-        this.orbitControls.userPan = false;
+        this.sceneControl = new kk.OrbitControls(camera);
+        this.sceneControl.center.y = 10;
+        this.sceneControl.userPan = false;
+        //this.sceneControl.fixedUpDown = true;
+        //this.sceneControl.setEnabled(false);
+
         //this.orbitControls.fixedUpDown = true;
         //this.orbitControls.autoRotate = true;
+        /*
         var scope = this;
+
+        var listener2 = kk.EventListener.create({
+            event: kk.EventListener.PAN,
+            swallowTouches: true,
+            onPan: function (e) {
+                this.orbitControls.onPan(e);
+            }
+        });
+        kk.eventManager.addListener(listener2);
 
         kk.hammer.on("panstart", function (e) {
             //console.log("panstart");
@@ -51,7 +72,7 @@ PlayScene.prototype = {
             //console.log(e);
             scope.orbitControls.dispatchEvent({type:"pan",
                 x: e.center.x,y: e.center.y,deltaX: e.deltaX, deltaY: e.deltaY});
-        });
+        });*/
 
         /*
         this.trackballControls = new THREE.TrackballControls(camera);
@@ -313,14 +334,14 @@ PlayScene.prototype = {
         cube.rotation.y = -angle;
         cube.idx = row*COL_NUM+col;
         this.cm.setCube(cube.idx, cube, idx);
-        return cube
+        return cube;
     },
     step:0,
     step2:0,
     render:function(){
         var delta = this.clock.getDelta();
         //this.trackballControls.update(delta);
-        this.orbitControls.update(delta);
+        this.sceneControl.update(delta);
 
         this.step+=0.02;
         if(this.step > Math.PI*2) this.step -= Math.PI*2;
@@ -364,77 +385,6 @@ PlayScene.prototype = {
 
         if (intersects.length > 0) {
             this.cm.breakCube(intersects[0].object.idx);
-            /*
-             console.log(intersects[0]);
-             console.log(intersects[0].object.idx);
-             if(intersects[0].object.material.opacity == 0.1)
-             {
-             intersects[0].object.material.transparent = true;
-             intersects[0].object.material.opacity = 1;
-             }
-             else{
-             intersects[0].object.material.transparent = true;
-             intersects[0].object.material.opacity = 0.1;
-             }*/
-        }
-    },
-    onMouseUp:function(event) {
-        var vector = new THREE.Vector3(( event.clientX / window.innerWidth ) * 2 - 1, -( event.clientY / window.innerHeight ) * 2 + 1, 0.5);
-        vector = vector.unproject(camera);
-        //console.log(vector,this.downVector);
-        if(!this.downVector.equals(vector)) return;
-
-        var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
-
-        var intersects = raycaster.intersectObjects(this.cubeGroup.children);
-
-        if (intersects.length > 0) {
-            this.cm.breakCube(intersects[0].object.idx);
-            /*
-             console.log(intersects[0]);
-             console.log(intersects[0].object.idx);
-            if(intersects[0].object.material.opacity == 0.1)
-            {
-                intersects[0].object.material.transparent = true;
-                intersects[0].object.material.opacity = 1;
-            }
-            else{
-                intersects[0].object.material.transparent = true;
-                intersects[0].object.material.opacity = 0.1;
-            }*/
-        }
-    },
-    onMouseDown:function(event) {
-        this.downVector  = new THREE.Vector3(( event.clientX / window.innerWidth ) * 2 - 1, -( event.clientY / window.innerHeight ) * 2 + 1, 0.5);
-        this.downVector = this.downVector.unproject(camera);
-    },
-    tube:null,
-    onMouseMove:function(event) {
-        var showRay = true;
-        if (showRay) {
-            var vector = new THREE.Vector3(( event.clientX / window.innerWidth ) * 2 - 1, -( event.clientY / window.innerHeight ) * 2 + 1, 0.5);
-            vector = vector.unproject(camera);
-
-            var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
-            var intersects = raycaster.intersectObjects(this.cubeGroup.children);
-
-            if (intersects.length > 0) {
-
-                var points = [];
-                points.push(new THREE.Vector3(-30, 39.8, 30));
-                points.push(intersects[0].point);
-
-                var mat = new THREE.MeshBasicMaterial({color: 0xff0000, transparent: true, opacity: 0.6});
-                var tubeGeometry = new THREE.TubeGeometry(new THREE.SplineCurve3(points), 60, 0.001);
-
-                if (this.tube) scene.remove(this.tube);
-
-                if (showRay) {
-                    this.tube = new THREE.Mesh(tubeGeometry, mat);
-                    scene.add(this.tube);
-                }
-            }
-            else if (this.tube) scene.remove(this.tube);
         }
     }
-};
+});

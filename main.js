@@ -10,30 +10,8 @@ var controls;
 kk.game.onStart = function(){
     var stats = initStats();
 
-    //document.addEventListener('mousedown', onDocumentMouseDown, false);
-    //document.addEventListener('mousemove', onDocumentMouseMove, false);
-    //document.addEventListener('mouseup', onDocumentMouseUp, false);
-    //document.addEventListener('ontouchstart',onDocumentMouseDown,false);
-    //document.addEventListener('ontouchend',onDocumentMouseMove,false);
-    //document.addEventListener('ontouchmove',onDocumentMouseUp,false);
-    var listener1 = kk.EventListener.create({
-        event: kk.EventListener.TOUCH,
-        swallowTouches: true,                       // 设置是否吞没事件，在 onTouchBegan 方法返回 true 时吞没
-        onTap: function (e) {     //实现 onTouchBegan 事件回调函数
-            onTap({x:e.center.x, y:e.center.y});
-        }
-    });
-    kk.eventManager.addListener(listener1);
-
-    /*
-    kk.hammer.on("tap", function (e) {
-        //console.log(e.center);
-        onTap({x:e.center.x, y:e.center.y});
-    });*/
-
     createGUI();
     var playScene = new PlayScene();
-    playScene.init();
     render();
 
     function createGUI(){
@@ -44,34 +22,6 @@ kk.game.onStart = function(){
             this.rebuildCubes = function(){
                 playScene.createCubes();
             };
-            /*
-            this.rotationSpeed = 0.02;
-            this.removeCube = function () {
-                var allChildren = scene.children;
-                var lastObject = allChildren[allChildren.length - 1];
-                if (lastObject instanceof THREE.Mesh) {
-                    scene.remove(lastObject);
-                }
-            };
-
-            this.addCube = function () {
-
-                var cubeSize = Math.ceil((Math.random() * 3));
-                var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
-                var cubeMaterial = new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff});
-                var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                cube.castShadow = true;
-                cube.name = "cube-" + scene.children.length;
-
-                // position the cube randomly in the scene
-
-                cube.position.x = -30 + Math.round((Math.random() * planeGeometry.parameters.width));
-                cube.position.y = Math.round((Math.random() * 5));
-                cube.position.z = -20 + Math.round((Math.random() * planeGeometry.parameters.height));
-
-                // add the cube to the scene
-                scene.add(cube);
-            };*/
             this.outputObjects = function () {
                 console.log(scene.children);
             }
@@ -83,10 +33,6 @@ kk.game.onStart = function(){
         gui.add(controls, 'cols', 10, 20);
         gui.add(controls, 'rebuildCubes');
         gui.add(controls, 'outputObjects');
-        /*
-        gui.add(controls, 'rotationSpeed', 0, 0.5);
-        gui.add(controls, 'addCube');
-        gui.add(controls, 'removeCube');*/
     }
     function render(){
         stats.update();
@@ -106,26 +52,13 @@ kk.game.onStart = function(){
 
         return stats;
     };
-    function onDocumentMouseUp(event) {
-        playScene.onMouseUp(event);
-    };
-    function onDocumentMouseDown(event) {
-        playScene.onMouseDown(event);
-    };
-    function onDocumentMouseMove(event) {
-        playScene.onMouseMove(event);
-    };
-    function onTap(event) {
-        playScene.onTap(event);
-    };
 }
+kk.game.run();
+
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
-//window.onload = init
 // listen to the resize events
 window.addEventListener('resize', onResize, false);
-
-kk.game.run();
