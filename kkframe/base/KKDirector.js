@@ -31,6 +31,10 @@ kk.director = {
         this._lastUpdate = now;
     },
 
+    getScheduler: function () {
+        return this._scheduler;
+    },
+
     mainLoop:function(){
         this.calculateDeltaTime();
         if (!this._paused) {
