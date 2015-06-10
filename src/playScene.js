@@ -20,9 +20,9 @@ var PlayScene = kk.Class.extend({
         this.sceneControl = new kk.OrbitControls(camera);
         this.sceneControl.center.y = 10;
         this.sceneControl.userPan = false;
-        //this.sceneControl.fixedUpDown = true;
+        this.sceneControl.fixedUpDown = true;
         //this.sceneControl.autoRotate = true;
-        this.sceneControl.setEnabled(false);
+        //this.sceneControl.setEnabled(false);
         kk.director.getScheduler().scheduleUpdate(this.sceneControl, 0, false);
 
         var listener1 = kk.EventListener.create({
@@ -39,7 +39,7 @@ var PlayScene = kk.Class.extend({
     init:function() {
         this.initStats();
 
-        this.createGUI();
+        //this.createGUI();
 
         // create a scene, that will hold all our elements such as objects, cameras and lights.
         scene = new THREE.Scene();
@@ -62,13 +62,13 @@ var PlayScene = kk.Class.extend({
 
         // position and point the camera to the center of the scene
         camera.position.x = 0;
-        camera.position.y = 55;
-        camera.position.z = 50;
+        camera.position.y = 35;
+        camera.position.z = 40;
         //camera.lookAt(new THREE.Vector3(0, 25, 0));
 
         // show axes in the screen
-        var axes = new THREE.AxisHelper(20);
-        scene.add(axes);
+        //var axes = new THREE.AxisHelper(20);
+        //scene.add(axes);
 
         /*
         var scope = this;
@@ -161,7 +161,7 @@ var PlayScene = kk.Class.extend({
         directionalLight.shadowMapHeight = 1024;
         directionalLight.shadowMapWidth = 1024;
         directionalLight.target = target;
-        directionalLight.shadowCameraVisible = true;
+        //directionalLight.shadowCameraVisible = true;
         scene.add(directionalLight);
 
         // create the ground plane
@@ -213,9 +213,9 @@ var PlayScene = kk.Class.extend({
         scene.add(sphere);
         */
 
-        this.loadObj2();
+        //this.loadObj2();
 
-        this.createControlObj();
+        //this.createControlObj();
     },
     createControlObj:function(){
         var cubeGeometry = new THREE.BoxGeometry(5, 5, 5);
@@ -300,9 +300,9 @@ var PlayScene = kk.Class.extend({
     createCubes:function() {
         if (this.cubeGroup != null)
             this.cubeGroup.parent.remove(this.cubeGroup);
-        ROW_NUM = this.controls.rows;
-        COL_NUM = this.controls.cols;
-        CUBE_LENGTH = this.controls.length;
+        //ROW_NUM = this.controls.rows;
+        //COL_NUM = this.controls.cols;
+        //CUBE_LENGTH = this.controls.length;
         this.cm = new CubeManager(this, ROW_NUM, COL_NUM, CUBE_LENGTH);
         this.cubeGroup = new THREE.Group();
         scene.add(this.cubeGroup);
@@ -315,7 +315,7 @@ var PlayScene = kk.Class.extend({
         //new kk.RotateControl(this.cubeGroup);
     },
     createOneCube2:function(row,col){
-        var angle = (Math.PI*2/this.controls.cols)*col;
+        var angle = (Math.PI*2/COL_NUM)*col;
         // create a cube
         var name;
         var idx = Math.ceil((Math.random() * 3));
@@ -344,7 +344,7 @@ var PlayScene = kk.Class.extend({
 
     },
     createOneCube:function(row,col){
-        var angle = (Math.PI*2/this.controls.cols)*col;
+        var angle = (Math.PI*2/COL_NUM)*col;
         // create a cube
         var color;
         var idx = Math.ceil((Math.random() * 3));

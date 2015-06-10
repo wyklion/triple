@@ -191,7 +191,6 @@
                 <file name="libs/stats.js"/>
                 <file name="libs/dat.gui.js"/>
                 <file name="libs/OrbitControls.js"/>
-                <file name="libs/TrackballControls.js"/>
                 <file name="libs/ColladaLoader.js"/>
                 <file name="libs/tween.min.js"/>
                 <file name="libs/MTLLoader.js"/>
