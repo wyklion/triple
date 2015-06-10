@@ -64,7 +64,7 @@ kk.OrbitControls = kk.Class.extend({
 
         // events
 
-        this.changeEvent = { type: 'change' };
+        //this.changeEvent = { type: 'change' };
 
     },
     setEnabled:function(b){

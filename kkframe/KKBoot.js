@@ -1463,7 +1463,7 @@ kk.game = {
             touchEvent._eventCode = kk.EventTouch.EventCode.TAP;
             kk.eventManager.dispatchEvent(touchEvent);
         });
-        kk.hammer.on("panstart pan", function (e) {
+        kk.hammer.on("panstart panmove panend", function (e) {
             var touchEvent = new kk.EventTouch(e);
             touchEvent._eventCode = kk.EventTouch.EventCode.PAN;
             kk.eventManager.dispatchEvent(touchEvent);

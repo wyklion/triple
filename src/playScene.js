@@ -226,13 +226,9 @@ var PlayScene = kk.Class.extend({
         cube.position.x = -5;
         cube.position.z = 15;
         cube.position.y = 15;
-        cube.lookAt(cube);
         scene.add(cube);
 
-        var ctr = new kk.OrbitControls(cube);
-        ctr.center.y = 10;
-        ctr.userPan = false;
-        kk.director.getScheduler().scheduleUpdate(ctr, 0, false);
+        var ctr = new kk.RotateControl(cube, camera);
     },
     loadObj2:function() {
         var loader = new THREE.ColladaLoader();
@@ -254,7 +250,9 @@ var PlayScene = kk.Class.extend({
                 }
             });
             scene.add(mesh);
+            this.mesh = mesh;
         });
+
     },
     loadObj:function(){
         var loader = new THREE.OBJMTLLoader();
@@ -314,6 +312,7 @@ var PlayScene = kk.Class.extend({
                 this.cubeGroup.add(cube);
             }
         }
+        //new kk.RotateControl(this.cubeGroup);
     },
     createOneCube2:function(row,col){
         var angle = (Math.PI*2/this.controls.cols)*col;

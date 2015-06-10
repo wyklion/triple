@@ -2,7 +2,7 @@
 <project name="Javascript compress project" basedir="D:\work\threeJs\project\triple" default="compile">
 
     <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
-             classpath="D:\work\threeJs\kkThree\tools\plugins\project_compile\build_web/bin/compiler-1.7.jar"/>
+             classpath="D:\work\threeJs\kkThree\tools\plugins\project_compile\build_web/bin/compiler-1.6.jar"/>
 
     <target name="compile">
         <jscomp compilationLevel="simple" 
@@ -98,7 +98,6 @@
                 <file name="scenes/Scene.js"/>
                 <file name="scenes/Fog.js"/>
                 <file name="scenes/FogExp2.js"/>
-                <file name="renderers/shaders/shaderChunk.js"/>
                 <file name="renderers/shaders/shaderChunkGLSL.js"/>
                 <file name="renderers/shaders/UniformsUtils.js"/>
                 <file name="renderers/shaders/UniformsLib.js"/>
@@ -113,6 +112,14 @@
                 <file name="renderers/webgl/plugins/LensFlarePlugin.js"/>
                 <file name="renderers/webgl/plugins/ShadowMapPlugin.js"/>
                 <file name="renderers/webgl/plugins/SpritePlugin.js"/>
+                <file name="base/KKCommon.js"/>
+                <file name="base/KKClass.js"/>
+                <file name="base/KKScheduler.js"/>
+                <file name="base/KKDirector.js"/>
+                <file name="event/hammer.js"/>
+                <file name="event/KKEvent.js"/>
+                <file name="event/KKEventListener.js"/>
+                <file name="event/KKEventManager.js"/>
                 <file name="extras/GeometryUtils.js"/>
                 <file name="extras/ImageUtils.js"/>
                 <file name="extras/SceneUtils.js"/>
@@ -181,11 +188,17 @@
 
             </sources>
             <sources dir="${basedir}">
-                <file name="libs/hammer.js"/>
                 <file name="libs/stats.js"/>
                 <file name="libs/dat.gui.js"/>
                 <file name="libs/OrbitControls.js"/>
+                <file name="libs/TrackballControls.js"/>
+                <file name="libs/ColladaLoader.js"/>
                 <file name="libs/tween.min.js"/>
+                <file name="libs/MTLLoader.js"/>
+                <file name="libs/OBJLoader.js"/>
+                <file name="libs/OBJMTLLoader.js"/>
+                <file name="src/RotateControl.js"/>
+                <file name="src/cubeManager.js"/>
                 <file name="src/playScene.js"/>
                 <file name="main.js"/>
 
